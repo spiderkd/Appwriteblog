@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import appwriteService from "../appwrite/config";
 import { Button, Container } from "../components";
+
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 
@@ -42,10 +43,7 @@ export default function Post() {
             className="rounded-xl"
           />
           {console.log("post.featureimage", post.featuredimage)}
-          {console.log(
-            "q",
-            appwriteService.getFilePreview(post.featuredimage)
-          )}
+          {console.log("q", appwriteService.getFilePreview(post.featuredimage))}
           {isAuthor && (
             <div className="absolute right-6 top-6">
               <Link to={`/edit-post/${post.$id}`}>
