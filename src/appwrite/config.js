@@ -117,17 +117,9 @@ export class Service {
   }
 
   getFilePreview(fileId) {
-    try {
-      return this.bucket.getFilePreview(conf.appwriteBucketId, fileId);
-    } catch (error) {
-      console.log("Appwrite Services :: Get File Preview ::", error);
-    }
+    return this.bucket.getFilePreview(conf.appwriteBucketId, fileId);
   }
 }
-
-
-
-
 
 const service = new Service();
 export default service;
