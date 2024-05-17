@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import appwriteService from "../appwrite/config";
-import { Button,Container } from "../components";
+import { Button, Container } from "../components";
 
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
@@ -36,22 +36,21 @@ export default function Post() {
   return post ? (
     <div className="py-8">
       <Container>
-        <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
+        <div className="w-full flex justify-center mb-4 relative  rounded-xl p-2 ">
           <img
             src={appwriteService.getFilePreview(post.featuredimage)}
             alt={post.title}
-            className="rounded-xl"
+            className="rounded-xl object-scale-down outline outline-offset-4 outline-white max-h-96 min-h-52 max-w-96 min-w-52	"
           />
-          {console.log("post.featureimage", post.featuredimage)}
-          {console.log("q", appwriteService.getFilePreview(post.featuredimage))}
+
           {isAuthor && (
-            <div className="absolute right-6 top-6">
+            <div className="absolute right-6 ">
               <Link to={`/edit-post/${post.$id}`}>
-                <Button bgColor="bg-green-500" className="mr-3">
+                <Button bgColor="bg-green-500 rounded" className="mr-3">
                   Edit
                 </Button>
               </Link>
-              <Button bgColor="bg-red-500" onClick={deletePost}>
+              <Button bgColor="bg-red-500 rounded" onClick={deletePost}>
                 Delete
               </Button>
             </div>
@@ -59,9 +58,9 @@ export default function Post() {
         </div>
 
         <div className="w-full mb-6">
-          <h1 className="text-2xl font-bold">{post.title}</h1>
+          <h1 className="text-2xl font-bold text-white">{post.title}</h1>
         </div>
-        <div className="browser-css">{parse(post.content)}</div>
+        <div className="browser-css text-white ">{parse(post.content)}</div>
       </Container>
     </div>
   ) : null;

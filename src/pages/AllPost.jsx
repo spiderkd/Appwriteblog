@@ -11,7 +11,8 @@ function AllPosts() {
       }
     });
   }, []);
-
+  //grid grid-cols-2 md:grid-cols-4 gap-4
+  //grid gap-4
   return (
     <div className="w-full py-8">
       <Container>
