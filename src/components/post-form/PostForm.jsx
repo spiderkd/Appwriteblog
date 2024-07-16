@@ -77,14 +77,19 @@ export default function PostForm({ post }) {
   }, [watch, slugTransform, setValue]);
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-      <div className="w-2/3 px-2">
-        <Input
-          label="Title :"
-          placeholder="Title"
-          className="mb-4"
-          {...register("title", { required: true })}
-        />
+    <form
+      onSubmit={handleSubmit(submit)}
+      className="flex flex-wrap text-blue-200 mt-2 relative pb-14"
+    >
+      <div className="lg:w-4/6 md:w-1/2 w-full sm:px-2">
+        <div>
+          <Input
+            label="Title :"
+            placeholder="Title"
+            className="sm:mb-4 mb-2 inline-block items-start"
+            {...register("title", { required: true })}
+          />
+        </div>
         <Input
           label="Slug :"
           placeholder="Slug"

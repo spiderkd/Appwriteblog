@@ -5,6 +5,7 @@ import { Button, Input, Logo } from "./index";
 import { useDispatch } from "react-redux";
 import authService from "../appwrite/auth";
 import { useForm } from "react-hook-form";
+import Meteors from "./magicui/meteors";
 
 function Login() {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ function Login() {
 
   return (
     <div className="flex items-center justify-center w-full min-h-[calc(100vh-200px)] p-3 sm:p-0 mt-3 sm:mt-0 mb-10">
+      <Meteors number={37} />
       <div
         className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10  border-black/10 sm:p-9 sm:pb-12 pb-11 shadow-2xl border-2`}
       >

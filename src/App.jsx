@@ -5,7 +5,7 @@ import authService from "./appwrite/auth";
 import { login, logout } from "./store/authslice";
 import { /*Footer,*/ Header } from "./components";
 import { Outlet } from "react-router-dom";
-import Meteors from "./components/magicui/meteors";
+// import Meteors from "./components/magicui/meteors";
 
 // import AnimatedGridPattern from "./components/magicui/animated-grid-pattern";
 // import { cn } from "./lib/utils";
@@ -33,7 +33,7 @@ function App() {
     <div className="min-h-screen flex flex-wrap content-between bg-[#111] ">
       <div className="w-full block">
         <Header />
-        <Meteors number={30} />
+        {/* <Meteors number={30} /> */}
         <main>
           <Outlet />
         </main>
