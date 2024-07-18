@@ -14,7 +14,7 @@ const SparklesText = ({
   const [sparkles, setSparkles] = useState([]);
 
   useEffect(() => {
-    const generateStar = () => {
+    const generateStar = () => { 
       const starX = `${Math.random() * 100}%`;
       const starY = `${Math.random() * 100}%`;
       const color = Math.random() > 0.5 ? colors.first : colors.second;

@@ -8,6 +8,7 @@ import { ButtonUI } from "@/components/ui/button";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 
+
 export default function Post() {
   const [post, setPost] = useState(null);
   const { slug } = useParams();

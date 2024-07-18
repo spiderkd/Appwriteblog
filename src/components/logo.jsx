@@ -1,4 +1,3 @@
-
 import logo from "../logo-no-background.png";
 function Logo({ width = "100px" }) {
   return (
