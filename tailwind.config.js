@@ -70,10 +70,10 @@ module.exports = {
           to: { height: "0" },
         },
         meteor: {
-          "0%": { transform: "rotate(215deg) translateX(0)", opacity: 1 },
+          "0%": { transform: "rotate(230deg) translateX(0)", opacity: 1 },
           "70%": { opacity: 1 },
           "100%": {
-            transform: "rotate(215deg) translateX(-500px)",
+            transform: "rotate(230deg) translateX(-470px)",
             opacity: 0,
           },
         },

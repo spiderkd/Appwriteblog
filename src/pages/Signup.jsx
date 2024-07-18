@@ -1,13 +1,9 @@
-import { Container, Signup as SignupComponent } from "../components";
-// import Meteors from "@/components/magicui/meteors";
+import { Signup as SignupComponent } from "../components";
 
 function Signup() {
   return (
-    <div className="py-8">
-      <Container>
-        {/* <Meteors number={30} /> */}
-        <SignupComponent />
-      </Container>
+    <div className="">
+      <SignupComponent />
     </div>
   );
 }

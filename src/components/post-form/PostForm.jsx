@@ -1,9 +1,18 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Button, Input, RTE, Select } from "..";
+import { RTE } from "..";
 import appwriteService from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Input } from "../ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { ButtonUI } from "../ui/button";
 
 export default function PostForm({ post }) {
   const { register, handleSubmit, watch, setValue, control, getValues } =
@@ -18,6 +27,7 @@ export default function PostForm({ post }) {
 
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
+  const [editorHeight, setEditorHeight] = useState(500);
 
   const submit = async (data) => {
     if (post) {
@@ -76,69 +86,121 @@ export default function PostForm({ post }) {
     return () => subscription.unsubscribe();
   }, [watch, slugTransform, setValue]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      const parentHeight =
+        document.querySelector(".parent-container").offsetHeight;
+      setEditorHeight(parentHeight);
+    };
+
+    // Initial calculation
+    handleResize();
+
+    // Recalculate on window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  console.log(editorHeight);
+
   return (
     <form
       onSubmit={handleSubmit(submit)}
-      className="flex flex-wrap text-blue-200 mt-2 relative pb-14"
+      className=" text-blue-200 mt-2 relative pb-14"
     >
-      <div className="lg:w-4/6 md:w-1/2 w-full sm:px-2">
-        <div>
-          <Input
-            label="Title :"
-            placeholder="Title"
-            className="sm:mb-4 mb-2 inline-block items-start"
-            {...register("title", { required: true })}
-          />
+      <div className="grid grid-cols-3 h-screen parent-container">
+        <div className="col-span-2  ">
+          <RTE
+            edHeight={editorHeight}
+            name="content"
+            control={control}
+            defaultValue={getValues("content")}
+          />{" "}
         </div>
-        <Input
-          label="Slug :"
-          placeholder="Slug"
-          className="mb-4"
-          {...register("slug", { required: true })}
-          onInput={(e) => {
-            setValue("slug", slugTransform(e.currentTarget.value), {
-              shouldValidate: true,
-            });
-          }}
-        />
-        <RTE
-          label="Content :"
-          name="content"
-          control={control}
-          defaultValue={getValues("content")}
-        />
-      </div>
-      <div className="w-1/3 px-2">
-        <Input
-          label="Featured Image :"
-          type="file"
-          className="mb-4"
-          accept="image/png, image/jpg, image/jpeg, image/gif"
-          {...register("image", { required: !post })}
-        />
-        {post && (
-          <div className="w-full mb-4">
-            <img
-              src={appwriteService.getFilePreview(post.featuredimage)}
-              alt={post.title}
-              className="rounded-lg"
+        <div className=" grid justify-evenly flex-col col-span-1 w-full sm:px-2">
+          {/*title*/}
+          <div className="justify-self-start w-full mt-1 ">
+            <Input
+              label="Title :"
+              placeholder="Title"
+              className="sm:mb-4 mb-2 rounded-[8px]  inline-block items-start "
+              {...register("title", { required: true })}
+            />{" "}
+            <Input
+              label="Featured Image :"
+              type="file"
+              className="mb-4 rounded-[8px] "
+              accept="image/png, image/jpg, image/jpeg, image/gif"
+              {...register("image", { required: !post })}
             />
+            {post && (
+              <div className="w-full mb-4 overflow-clip max-h-[310px] overflow-y-auto flex items-center  ">
+                <img
+                  src={appwriteService.getFilePreview(post.featuredimage)}
+                  alt={post.title}
+                  className="rounded-lg  "
+                />
+              </div>
+            )}
           </div>
-        )}
-        <Select
+
+          <div className="px-2 flex flex-col justify-evenly  w-full">
+            <div>
+              <Select onValueChange={(value) => setValue("status", value)}>
+                <SelectTrigger className="w-full  rounded-[8px] mb-2 ">
+                  <SelectValue placeholder="Choose" />
+                </SelectTrigger>
+                <SelectContent className="bg-gray-700 text-blue-200">
+                  <SelectItem value="active">active</SelectItem>
+                  <SelectItem value="inactive">inactive</SelectItem>
+                </SelectContent>
+                <input
+                  type="hidden"
+                  {...register("status", { required: true })}
+                  value={watch("status")}
+                />
+              </Select>
+              <ButtonUI
+                type="submit"
+                variant="outline_auth"
+                bgColor={post ? "bg-green-500" : undefined}
+                className="hover:bg-slate-700 rounded-[9px] w-full mt-2"
+              >
+                {post ? "Update" : "Submit"}
+              </ButtonUI>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Input
+        readOnly={true}
+        label="Slug :"
+        placeholder=""
+        className="mb-4 border-none text-transparent"
+        {...register("slug", { required: true })}
+        onInput={(e) => {
+          setValue("slug", slugTransform(e.currentTarget.value), {
+            shouldValidate: true,
+          });
+        }}
+      />
+    </form>
+  );
+}
+
+{
+  /* <Select
           options={["active", "inactive"]}
           label="Status"
           className="mb-4"
           {...register("status", { required: true })}
-        />
-        <Button
-          type="submit"
-          bgColor={post ? "bg-green-500" : undefined}
-          className="w-full"
-        >
-          {post ? "Update" : "Submit"}
-        </Button>
-      </div>
-    </form>
-  );
+        /> */
+}
+
+{
+  /*btn*/
 }

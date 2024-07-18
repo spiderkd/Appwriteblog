@@ -9,7 +9,8 @@ export const Meteors = ({ number = 20 }) => {
   useEffect(() => {
     const styles = [...new Array(number)].map(() => ({
       top: -3,
-      left: Math.floor(Math.random() * window.innerWidth - 420) + "px",
+      left: Math.floor(Math.random() * window.innerWidth - 310) + "px",
+
       animationDelay: Math.random() * 1 + 0.2 + "s",
       animationDuration: Math.floor(Math.random() * 8 + 2) + "s",
     }));

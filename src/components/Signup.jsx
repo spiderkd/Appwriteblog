@@ -2,10 +2,13 @@ import { useState } from "react";
 import authService from "../appwrite/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../store/authslice.js";
-import { Button, Input, Logo } from "./index.js";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import Meteors from "./magicui/meteors";
+// import Meteors from "./magicui/meteors";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { ButtonUI } from "@/components/ui/button";
+import Yoursvg from "../lib/signup.svg";
 
 function Signup() {
   const navigate = useNavigate();
@@ -29,66 +32,103 @@ function Signup() {
 
   return (
     <>
-      <div className="flex  items-center justify-center  h-[calc(100vh-95px)] w-full mb-3 p-1 sm:p-0 mt-3 sm:mt-0">
-        <Meteors number={38} />
-        <div
-          className={`mx-auto w-full max-w-lg bg-gray-200 rounded-xl px-5 sm:p-10 border  border-blue-300`}
-        >
-          <div className="mb-2 flex items-center justify-center">
-            <span className="inline-block w-full max-w-[100px]">
-              <Logo width="100%" />
-            </span>
-          </div>
-          <h2 className="text-center text-2xl font-bold leading-tight">
-            Sign up to create account
-          </h2>
-          <p className="mt-2 text-center text-base text-black/60">
-            Already have an account?&nbsp;
-            <Link
-              to="/login"
-              className="font-medium text-primary transition-all duration-200 hover:underline"
-            >
-              Sign In
-            </Link>
-          </p>
-          {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-
-          <form onSubmit={handleSubmit(create)}>
-            <div className="space-y-5">
-              <Input
-                label="Full Name: "
-                placeholder="Enter your full name"
-                {...register("name", {
-                  required: true,
-                })}
-              />
-              <Input
-                label="Email: "
-                placeholder="Enter your email"
-                type="email"
-                {...register("email", {
-                  required: true,
-                  validate: {
-                    matchPatern: (value) =>
-                      /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
-                        value
-                      ) || "Email address must be a valid Email address",
-                  },
-                })}
-              />
-              <Input
-                label="Password: "
-                type="password"
-                placeholder="Enter your password"
-                {...register("password", {
-                  required: true,
-                })}
-              />
-              <Button type="submit" className="w-full">
-                Create Account
-              </Button>
+      <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[200px]">
+        <div className="hidden bg-[#2d2d2d] lg:block ">
+          <img
+            src={Yoursvg}
+            width="1920"
+            height="980"
+            className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          />
+        </div>
+        <div className="flex items-center justify-center py-12">
+          <div className="mx-auto grid w-[350px] gap-6">
+            <div className="grid gap-2 text-center">
+              <h1 className="text-3xl font-bold text-white">Sign up</h1>
+              <p className="text-balance text-muted-foreground text-white">
+                Enter your credentials to create your account
+              </p>
             </div>
-          </form>
+
+            <form onSubmit={handleSubmit(create)}>
+              <div className="grid gap-5">
+                <div className="grid gap-2">
+                  <Label
+                    htmlFor="password"
+                    className="text-white flex items-start"
+                  >
+                    Username
+                  </Label>
+                  <Input
+                    label="Full Name: "
+                    placeholder="Enter your full name"
+                    className="text-zinc-500"
+                    {...register("name", {
+                      required: true,
+                    })}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="" className="text-white flex items-start">
+                    Email
+                  </Label>
+                  <Input
+                    label="Email: "
+                    placeholder="Enter your email"
+                    type="email"
+                    className="text-zinc-500"
+                    {...register("email", {
+                      required: true,
+                      validate: {
+                        matchPatern: (value) =>
+                          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
+                            value
+                          ) || "Email address must be a valid Email address",
+                      },
+                    })}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label
+                    htmlFor="password"
+                    className="text-white flex items-start"
+                  >
+                    Password
+                  </Label>
+                  <Input
+                    label="Password: "
+                    type="password"
+                    placeholder="Enter your password"
+                    className="text-zinc-500"
+                    {...register("password", {
+                      required: true,
+                    })}
+                  />
+                </div>
+                <ButtonUI
+                  type="submit"
+                  variant="outline_auth"
+                  className="w-full  bg-white
+              "
+                >
+                  Create Account
+                </ButtonUI>
+                {error && (
+                  <p className="text-red-600 mt-8 text-center">{error}</p>
+                )}
+
+                <p className="mt-2 text-center text-base underline text-white">
+                  Already have an account?&nbsp;
+                  <Link
+                    to="/login"
+                    className="font-normal text-primary transition-all duration-200 hover:underline"
+                  >
+                    Sign In
+                  </Link>
+                </p>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </>

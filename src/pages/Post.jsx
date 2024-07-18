@@ -8,7 +8,6 @@ import { ButtonUI } from "@/components/ui/button";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 
-
 export default function Post() {
   const [post, setPost] = useState(null);
   const { slug } = useParams();
@@ -44,17 +43,19 @@ export default function Post() {
     <div className="py-8 ">
       <Container>
         <div className="w-full  mb-6"></div>
-        <div className="grid grid-cols-3 ">
-          <div className="w-full flex  justify-center mb-4 relative  rounded-xl p-2 ">
+        <div className="lg:grid lg:grid-cols-5 ">
+          <div className="w-full flex col-span-2 justify-center mb-4 relative  rounded-xl p-2 ">
             <img
               src={appwriteService.getFilePreview(post.featuredimage)}
               alt={post.title}
-              className="rounded-xl object-scale-down outline outline-1 outline-offset-0 outline-gray-400 max-h-96 min-h-[21rem] max-w-96 min-w-52	"
+              className=" object-scale-down outline outline-1 outline-offset-0 outline-gray-400 max-h-96 min-h-[21rem] max-w-96 min-w-52	"
             />
           </div>
 
-          <div className="browser-css col-span-2 text-white ">
-            <h1 className="text-2xl font-bold text-white pb-4">{post.title}</h1>
+          <div className="browser-css col-span-3 text-white border rounded-xl ">
+            <h1 className="text-2xl font-bold text-white pb-4 underline">
+              {post.title}
+            </h1>
             {parse(post.content)}
           </div>
         </div>
