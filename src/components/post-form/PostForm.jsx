@@ -112,8 +112,8 @@ export default function PostForm({ post }) {
       onSubmit={handleSubmit(submit)}
       className=" text-blue-200 mt-2 relative pb-14"
     >
-      <div className="grid grid-cols-3 h-screen parent-container">
-        <div className="col-span-2  ">
+      <div className="grid grid-cols-3 h-screen parent-container max-md:grid-cols-1 max-md:h-full">
+        <div className="col-span-2 max-md:order-last">
           <RTE
             edHeight={editorHeight}
             name="content"

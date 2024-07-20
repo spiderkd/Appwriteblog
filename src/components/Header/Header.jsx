@@ -63,7 +63,9 @@ function Header() {
                     to={item.slug}
                     className={({ isActive }) =>
                       `block  ${
-                        isActive ? "text-[#ffffff]" : "text-gray-500"
+                        isActive
+                          ? "text-[#ffffff]  "
+                          : "text-[#F6F5F5] text-opacity-85	"
                       } sm:pt-1 pt-1 sm:px-5 px-3 md:mr-4 duration-200 hover:underline text-xl`
                     }
                     // className="px-6 py-2 duration-200 hover:text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-blue-500 rounded-full"
@@ -78,7 +80,7 @@ function Header() {
               <li className="max-sm:hidden">
                 <LogoutBtn
                   className={
-                    "px-4 py-1 text-gray-500 font-semibold text-xl  text-center  hover:underline "
+                    "px-4 py-1 text-[#F6F5F5] text-opacity-85 font-semibold text-xl  text-center  hover:underline "
                   }
                 />
               </li>

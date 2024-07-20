@@ -25,7 +25,11 @@ export default function RTE({
             init={{
               initialValue: defaultValue,
               height: edHeight,
-
+              mobile: {
+                menubar: true,
+                plugins: "autosave lists autolink",
+                toolbar: "undo bold italic styles",
+              },
               menubar: true,
               plugins: [
                 "image",

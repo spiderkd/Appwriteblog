@@ -36,7 +36,7 @@ function AllPosts() {
       />
       ;
       <Container>
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-4 gap-2 max-md:flex max-md:flex-wrap max-sm:grid-cols-1">
           {posts ? (
             posts.map((post) => (
               <div
