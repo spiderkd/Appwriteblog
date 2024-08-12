@@ -12,6 +12,7 @@ import Signup from "./pages/Signup";
 import EditPost from "./pages/EditPost";
 import Post from "./pages/Post";
 import AllPosts from "./pages/AllPost.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 const router = createBrowserRouter([
   {
@@ -69,12 +70,20 @@ const router = createBrowserRouter([
         path: "/post/:slug",
         element: <Post />,
       },
+      {
+        path: "*",
+        element: (
+          <AuthLayout authentication>
+            <NotFound />
+          </AuthLayout>
+        ),
+      },
     ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode >
+  <React.StrictMode>
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>

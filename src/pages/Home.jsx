@@ -1,15 +1,45 @@
 // import { useEffect, useState } from "react";
 // import appwriteService from "../appwrite/config";
 // import { Container, PostCard } from "../components";
-import { useSelector } from "react-redux";
 // import Spp from "@/components/ui/Spline";
-import Spline from "@splinetool/react-spline";
+// import Spline from "@splinetool/react-spline";
 // import { Spline } from "lucide-react";
+import { useSelector } from "react-redux";
+import image_hero from "../lib/hero.png";
+import { ButtonUI } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import appwriteService from "../appwrite/config";
+import { useState, useEffect } from "react";
+import { Container, PostCard } from "@/components";
+import { AnimatePresence, motion } from "framer-motion";
 
+const variants = {
+  initial: { opacity: 0, scale: 1 },
+  animate: { opacity: 1, scale: 1 },
+  exit: { opacity: 0, scale: 1 },
+};
 function Home() {
   // const [posts, setPosts] = useState([]);
   const Login = useSelector((state) => state.auth.status);
+  const [posts, setPosts] = useState([]);
+  appwriteService.getPosts([]).then((posts) => {
+    if (posts) {
+      setPosts(posts.documents);
+    }
+    if (!posts) {
+      return <div className="flex flex-col space-y-3">loading</div>;
+    }
+  });
+  const [text, setText] = useState("");
 
+  useEffect(() => {
+    const words = ["Creative", "Bold", "Expressive"];
+    const intervalId = setInterval(() => {
+      setText(words[Math.floor(Math.random() * words.length)]);
+    }, 2000);
+
+    return () => clearInterval(intervalId);
+  }, []);
   // useEffect(() => {
   //   appwriteService.getPosts().then((posts) => {
   //     if (posts) {
@@ -21,12 +51,97 @@ function Home() {
   return (
     <>
       {Login ? (
-        <div className="w-full  left-1 flex justify-end items-end">
-          <Spline scene="https://prod.spline.design/zTE5ZJfqTuwF4InL/scene.splinecode" />
-          {/* <Spline scene="https://prod.spline.design/inbw0iAqRO3ddrGV/scene.splinecode" /> */}
-        </div>
+        <Container>
+          <div className="flex flex-col items-center mt-2  w-full    ">
+            <h1 className="text-white  text-[2.5rem] mb- ">
+              Welcome to BlogTube
+            </h1>
+            <div className="grid grid-cols-4 gap-2 max-md:flex max-md:flex-wrap max-sm:grid-cols-1">
+              {posts ? (
+                posts.map((post) => (
+                  <div
+                    key={post.$id}
+                    className="p-2 sm:w-1/2 min-h-[345px] w-full lg:w-1/3 xl:w-1/4"
+                  >
+                    <PostCard {...post} />
+                  </div>
+                ))
+              ) : (
+                <div className="flex flex-col space-y-3"></div>
+              )}
+            </div>
+            <div className="flex flex-row justify-around ">
+              <ButtonUI size="lg" asChild>
+                <Link
+                  className="bg-lime-400 ml-1  mr-3 hover:bg-lime-500 rounded-xl mt-7"
+                  to={"/all-posts"}
+                >
+                  more...
+                </Link>
+              </ButtonUI>
+              <ButtonUI size="lg" asChild>
+                <Link
+                  className="bg-white hover:bg-slate-200 rounded-xl mt-7"
+                  to={"/add-post"}
+                >
+                  Add Your Own
+                </Link>
+              </ButtonUI>
+            </div>
+          </div>
+        </Container>
       ) : (
-        <div></div>
+        <div>
+          <div className="grid grid-cols-2 m-0 max-sm:grid-cols-1 ">
+            <div className="flex flex-col items-start mt-14  ml-16 h-screen  max-sm:ml-0  max-sm:items-center ">
+              <h1 className="text-white  text-left tex text-6xl max-sm:text-center max-sm:text-5xl">
+                Always Be{" "}
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    className="text-amber-300"
+                    Variants={variants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    key={text}
+                  >
+                    {text}
+                  </motion.span>
+                </AnimatePresence>
+              </h1>
+              <h1 className="text-white  text-left  text-[2.3rem]  max-sm:text-center max-sm:text-3xl">
+                Welcome to BlogTube
+              </h1>
+              <p className="text-white w-5/6 pt-4  text-sm  text-left max-sm:text-center  ">
+                Dive into a world of inspiring stories, helpful tips, and
+                thoughtful insights. Join our community of curious minds and
+                lifelong learners. Explore, engage, and grow with our latest
+                articles and discussions.
+              </p>
+              <div className="flex flex-row justify-around items-end ">
+                <ButtonUI size="lg" asChild>
+                  <Link
+                    className="bg-amber-500  ml-1  mr-3 hover:bg-amber-500 rounded-xl mt-7"
+                    to={"/login"}
+                  >
+                    Login
+                  </Link>
+                </ButtonUI>
+                <ButtonUI size="lg" asChild>
+                  <Link
+                    className="bg-white hover:bg-slate-200 rounded-xl mt-7"
+                    to={"/signup"}
+                  >
+                    Sign up
+                  </Link>
+                </ButtonUI>
+              </div>
+            </div>
+            <div className="mt-0 max-sm:hidden">
+              <img src={image_hero} alt="hero image" className="scale-[70%] " />
+            </div>
+          </div>
+        </div>
       )}
     </>
   );
@@ -45,126 +160,3 @@ function Home() {
 }
 
 export default Home;
-
-// function Home() {
-//   const [posts, setPosts] = useState([]);
-//   const [toView, setToView] = useState(false);
-//   const Login = useSelector((state) => state.auth.status);
-
-//   const toogleDisplay = () => {
-//     setToView((prev) => !prev);
-//     setTimeout(() => {
-//       setToView(false);
-//     }, 2000);
-//   };
-//   const stripHtmlTags = (str) => {
-//     if (!str) return "";
-//     return str.replace(/<\/?[^>]+(>|$)/g, "");
-//   };
-//   const sanitizedContent = stripHtmlTags(posts[0]?.content);
-
-//   return (
-//     <>
-//       {" "}
-//       {Login ? (
-//         <div className="w-full">
-//           <div className="capitalize mt-10">
-//             <p className="text-xs text-gray-300">Our blogs</p>
-//             <h1 className="text-4xl font-extrabold text-[#d9e3f3]">
-//               stories and ideas
-//             </h1>
-//             <p className="text-sm text-gray-500">
-//               Stay Updated with the Hottest Trends and Insights
-//             </p>
-//           </div>
-//           <div className="relative sm:w-[80vw] w-[90vw] xl:flex mx-auto my-14 p-2 bg-gree-300 xl:h-[580px]">
-//             <div className="xl:w-[45%] w-full  border-current rounded h-full border-2 border-white p-2">
-//               <Link to={`${Login ? `/post/${posts[0]?.$id}` : "/login"}`}>
-//                 {/* <PostCard {...posts[0] } className="height-[600px]"/> */}
-//                 <img
-//                   src={authService.getFilePreview(posts[0]?.featuredImage)}
-//                   alt={posts[0]?.titles}
-//                   className="rounded-t-[12px] rounded-b-lg h-[60%] duration-300 rounded-sm w-full object-cover hover:brightness-110"
-//                 />
-//                 <div className="text-left px-4 pt-6">
-//                   <button
-//                     className={`flex items-center
-// 					${posts[0]?.status !== "active" ? "bg-red-50" : " bg-[#f0fdf4] "}
-// 					mb-2 px-3 py-[2px] rounded-full font- text-black text-left cursor-default`}
-//                   >
-//                     <div
-//                       className={`${
-//                         posts[0]?.status !== "active"
-//                           ? "bg-red-400"
-//                           : "bg-green-400"
-//                       } mr-2  rounded-full h-3 w-3 `}
-//                     ></div>
-//                     {posts[0]?.status}
-//                   </button>
-//                   <h2 className="lg:text-3xl text-xl tracking-wider font-semibold text-gray-100 -4 truncate">
-//                     {posts[0]?.titles}
-//                   </h2>
-//                   <h4 className="lg:text-sm text-md text-[#909090] tracking-tight pb-4 truncate">
-//                     {sanitizedContent}
-//                   </h4>
-//                   <div className="flex items-center text-gray-300 mt-1.5 pb-4 sm:pb-0">
-//                     <div className="s:w-[55px] s:h-[55px] w-[48px] h-[48px] rounded-full border-2 border-white bg-gray-400"></div>
-//                     <div className="block pl-4 leading-4">
-//                       <span className="text-md">Sachin kumar</span>
-//                       <br />
-//                       <span className="text-xs">29 may 2022</span>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </Link>
-//             </div>
-//             <div className="xl:w-[60%] w-[102%] sm:w-[100%] s:p-2 p-1 mt-8 xl:mt-0 shadow shadow-[#171717]">
-//               <HomeSideBox post={posts[1]} />
-//               <HomeSideBox post={posts[2]} />
-//               <HomeSideBox post={posts[3]} />
-//             </div>
-//             <Link to={`/all-posts`}>
-//               <div className="absolute text-right -bottom-6 sm:-right-20 right-0 mx-auto">
-//                 <span className="text-gray-300 ">more...</span>
-//               </div>
-//             </Link>
-//           </div>
-//         </div>
-//       ) : (
-//         <Container>
-//           <div className="w-full flex justify-center items-center py-8 mt-4 text-center min-h-[calc(100vh-200px)]">
-//             <div className="p-2">
-//               {Login ? null : (
-//                 <>
-//                   <h1 className="text-3xl text-gray-200 font-bold">
-//                     <Link
-//                       to="/login"
-//                       className=" underline underline-offset-2 text-gray-300"
-//                     >
-//                       Login
-//                     </Link>{" "}
-//                     to see posts.
-//                   </h1>
-//                   <p
-//                     onClick={toogleDisplay}
-//                     className="text-gray-500 text-xs cursor-pointer"
-//                   >
-//                     Skip signup ?<br />
-//                     <span className={`${toView ? "block" : "hidden"}`}>
-//                       email:{" "}
-//                       <strong className="text-gray-200">test@gmail.com</strong>{" "}
-//                       || password:{" "}
-//                       <strong className="text-gray-200"> test1234</strong>
-//                     </span>
-//                     <br />
-//                   </p>
-//                 </>
-//               )}
-//             </div>
-//           </div>
-//         </Container>
-//       )}
-//     </>
-//   );
-// }
-// export default Home;

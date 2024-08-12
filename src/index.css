@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Playwrite+CU:wght@100..400&display=swap"); */
 .masonry {
   display: block;
   columns: 17rem;

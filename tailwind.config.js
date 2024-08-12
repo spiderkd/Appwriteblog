@@ -20,6 +20,9 @@ module.exports = {
       },
     },
     extend: {
+      // fontFamily: {
+      //   Caveat: ["Playwrite CU", "cursive"],
+      // },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
