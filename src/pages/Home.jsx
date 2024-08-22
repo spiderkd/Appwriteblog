@@ -58,9 +58,13 @@ function Home() {
       {Login ? (
         <Container>
           <div className="flex flex-col items-center mt-2  w-full    ">
-            <h1 className="text-white  text-[2.5rem] mb- ">
+            <h1 className="text-[2.0rem] text-gray-200 mb-1 mt-6 ">
               Welcome to <span className="text-amber-300">BlogTube</span>
             </h1>
+            <h1 className="text-[1rem] text-gray-200 mb-10 ">
+              A place for short and sweet blogs
+            </h1>
+
             <div className="grid grid-cols-4 gap-2 max-md:flex max-md:flex-wrap max-sm:grid-cols-1">
               {loading ? (
                 <div className="flex flex-col space-y-3">
@@ -81,7 +85,7 @@ function Home() {
                 ))
               )}
             </div>
-            <div className="flex flex-row justify-around ">
+            <div className="flex flex-row justify-around mt-7 ">
               <ButtonUI size="lg" asChild variant="default2">
                 <Link
                   className="bg-amber-300 ml-1 mr-3  hover:bg-amber-400 rounded-xl mt-7"
