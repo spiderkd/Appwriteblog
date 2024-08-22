@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, PostCard } from "../components";
 import appwriteService from "../appwrite/config";
 import SparklesText from "@/components/magicui/sparkles-text";
@@ -6,22 +6,18 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function AllPosts() {
   const [posts, setPosts] = useState([]);
-  appwriteService.getPosts([]).then((posts) => {
-    if (posts) {
-      setPosts(posts.documents);
-    }
-    if (!posts) {
-      return (
-        <div className="flex flex-col space-y-3">
-          <Skeleton className="h-[125px] w-[250px] rounded-xl" />
-          <div className="space-y-2">
-            <Skeleton className="h-4 w-[250px]" />
-            <Skeleton className="h-4 w-[200px]" />
-          </div>
-        </div>
-      );
-    }
-  });
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    appwriteService.getPosts([]).then((posts) => {
+      if (posts) {
+        const activePosts = posts.documents.filter(
+          (post) => post.status === "active"
+        );
+        setPosts(activePosts);
+      }
+      setLoading(false);
+    });
+  }, []);
 
   //grid grid-cols-2 md:grid-cols-4 gap-4
   //grid gap-4
@@ -34,10 +30,18 @@ function AllPosts() {
         sparklesCount={10}
         colors={{ first: "#9E7AFF", second: "#FE8BBB" }}
       />
-      ;
+
       <Container>
         <div className="grid grid-cols-4 gap-2 max-md:flex max-md:flex-wrap max-sm:grid-cols-1">
-          {posts ? (
+          {loading ? (
+            <div className="flex flex-col space-y-3">
+              <Skeleton className="h-[125px] w-[250px] rounded-xl" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
+              </div>
+            </div>
+          ) : (
             posts.map((post) => (
               <div
                 key={post.$id}
@@ -46,14 +50,6 @@ function AllPosts() {
                 <PostCard {...post} />
               </div>
             ))
-          ) : (
-            <div className="flex flex-col space-y-3">
-              <Skeleton className="h-[125px] w-[250px] rounded-xl" />
-              <div className="space-y-2">
-                <Skeleton className="h-4 w-[250px]" />
-                <Skeleton className="h-4 w-[200px]" />
-              </div>
-            </div>
           )}
         </div>
       </Container>

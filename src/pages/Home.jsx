@@ -12,6 +12,7 @@ import appwriteService from "../appwrite/config";
 import { useState, useEffect } from "react";
 import { Container, PostCard } from "@/components";
 import { AnimatePresence, motion } from "framer-motion";
+import { Skeleton } from "antd";
 
 const variants = {
   initial: { opacity: 0, scale: 1 },
@@ -22,14 +23,18 @@ function Home() {
   // const [posts, setPosts] = useState([]);
   const Login = useSelector((state) => state.auth.status);
   const [posts, setPosts] = useState([]);
-  appwriteService.getPosts([]).then((posts) => {
-    if (posts) {
-      setPosts(posts.documents);
-    }
-    if (!posts) {
-      return <div className="flex flex-col space-y-3">loading</div>;
-    }
-  });
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    appwriteService.getPosts([]).then((posts) => {
+      if (posts) {
+        const activePosts = posts.documents.filter(
+          (post) => post.status === "active"
+        );
+        setPosts(activePosts);
+      }
+      setLoading(false);
+    });
+  }, []);
   const [text, setText] = useState("");
 
   useEffect(() => {
@@ -54,10 +59,18 @@ function Home() {
         <Container>
           <div className="flex flex-col items-center mt-2  w-full    ">
             <h1 className="text-white  text-[2.5rem] mb- ">
-              Welcome to BlogTube
+              Welcome to <span className="text-amber-300">BlogTube</span>
             </h1>
             <div className="grid grid-cols-4 gap-2 max-md:flex max-md:flex-wrap max-sm:grid-cols-1">
-              {posts ? (
+              {loading ? (
+                <div className="flex flex-col space-y-3">
+                  <Skeleton className="h-[125px] w-[250px] rounded-xl" />
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-[250px]" />
+                    <Skeleton className="h-4 w-[200px]" />
+                  </div>
+                </div>
+              ) : (
                 posts.map((post) => (
                   <div
                     key={post.$id}
@@ -66,14 +79,12 @@ function Home() {
                     <PostCard {...post} />
                   </div>
                 ))
-              ) : (
-                <div className="flex flex-col space-y-3"></div>
               )}
             </div>
             <div className="flex flex-row justify-around ">
               <ButtonUI size="lg" asChild variant="default2">
                 <Link
-                  className="bg-lime-400 ml-1 mr-3  hover:bg-lime-500 rounded-xl mt-7"
+                  className="bg-amber-300 ml-1 mr-3  hover:bg-amber-400 rounded-xl mt-7"
                   to={"/all-posts"}
                 >
                   See other people post
