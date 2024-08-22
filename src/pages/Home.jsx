@@ -71,9 +71,9 @@ function Home() {
               )}
             </div>
             <div className="flex flex-row justify-around ">
-              <ButtonUI size="lg" asChild>
+              <ButtonUI size="lg" asChild variant="default2">
                 <Link
-                  className="bg-lime-300 ml-1 mr-3 hover:bg-lime-500 rounded-xl mt-7"
+                  className="bg-lime-400 ml-1 mr-3  hover:bg-lime-500 rounded-xl mt-7"
                   to={"/all-posts"}
                 >
                   more...
