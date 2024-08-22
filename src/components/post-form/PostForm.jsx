@@ -113,13 +113,13 @@ export default function PostForm({ post }) {
       className=" text-blue-200 mt-2 relative pb-14"
     >
       <div className="grid grid-cols-3 h-screen parent-container max-md:grid-cols-1 max-md:h-full">
-        <div className="col-span-2 max-md:order-last">
+        <div className="col-span-2 h-screen max-md:hidden">
           <RTE
             edHeight={editorHeight}
             name="content"
             control={control}
             defaultValue={getValues("content")}
-          />{" "}
+          />
         </div>
         <div className=" grid justify-evenly flex-col col-span-1 w-full sm:px-2">
           {/*title*/}
@@ -146,6 +146,14 @@ export default function PostForm({ post }) {
                 />
               </div>
             )}
+          </div>
+          <div className=" md:hidden mb-4">
+            <RTE
+              edHeight={editorHeight}
+              name="content"
+              control={control}
+              defaultValue={getValues("content")}
+            />{" "}
           </div>
 
           <div className="px-2 flex flex-col justify-evenly  w-full">

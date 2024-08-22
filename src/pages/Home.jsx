@@ -76,7 +76,7 @@ function Home() {
                   className="bg-lime-400 ml-1 mr-3  hover:bg-lime-500 rounded-xl mt-7"
                   to={"/all-posts"}
                 >
-                  more...
+                  See other people post
                 </Link>
               </ButtonUI>
               <ButtonUI size="lg" asChild>
@@ -119,9 +119,9 @@ function Home() {
                 articles and discussions.
               </p>
               <div className="flex flex-row justify-around items-end ">
-                <ButtonUI size="lg" asChild>
+                <ButtonUI size="lg" asChild variant="default2">
                   <Link
-                    className="bg-amber-500  ml-1  mr-3 hover:bg-amber-500 rounded-xl mt-7"
+                    className="bg-amber-300  ml-1  mr-3 hover:bg-amber-500 rounded-xl mt-7"
                     to={"/login"}
                   >
                     Login

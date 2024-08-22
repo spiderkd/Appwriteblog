@@ -14,7 +14,7 @@ const SparklesText = ({
   const [sparkles, setSparkles] = useState([]);
 
   useEffect(() => {
-    const generateStar = () => { 
+    const generateStar = () => {
       const starX = `${Math.random() * 100}%`;
       const starY = `${Math.random() * 100}%`;
       const color = Math.random() > 0.5 ? colors.first : colors.second;
@@ -50,7 +50,7 @@ const SparklesText = ({
 
   return (
     <div
-      className={cn("text-6xl font-bold", className)}
+      className={cn("text-6xl ", className)}
       {...props}
       style={{
         "--sparkles-first-color": `${colors.first}`,
